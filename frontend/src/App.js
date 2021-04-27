@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
-
-import GoalInput from './components/goals/GoalInput';
+import React, { useEffect, useState } from 'react';
 import CourseGoals from './components/goals/CourseGoals';
+import GoalInput from './components/goals/GoalInput';
 import ErrorAlert from './components/UI/ErrorAlert';
+
+// const backendUrl = 'http://localhost';
+// FE will be deployed in the same Task as the BE -> they have the same domain -> no domain needed here
+const backendUrl = '';
+const goalsUrl = `${backendUrl}/goals`;
 
 function App() {
   const [loadedGoals, setLoadedGoals] = useState([]);
@@ -14,7 +18,7 @@ function App() {
       setIsLoading(true);
 
       try {
-        const response = await fetch('http://localhost/goals');
+        const response = await fetch(goalsUrl);
 
         const resData = await response.json();
 
@@ -39,7 +43,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost/goals', {
+      const response = await fetch(goalsUrl, {
         method: 'POST',
         body: JSON.stringify({
           text: goalText,
@@ -78,7 +82,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost/goals/' + goalId, {
+      const response = await fetch(goalsUrl + `/${goalId}`, {
         method: 'DELETE',
       });
 
